@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.green.min.css"
+>
+  <script src="{% static "form.js" %}" defer></script>
+  <title>Windy AI Customer Support</title>
+</head>
+<body class="container">
+  <header>
+    <hgroup>
+      <h1>Windy Customer Support Page</h1>
+      <p>Need help? Ask us anything!</p>
+    </hgroup>
+  </header>
+  <main>
+    <section>
+      <a href="{% url "delete" %}"><button class="contrast">Reset Chat</button></a>
+      <p>Contact us via chat below</p>
+      <div id="chat" class="overflow-auto">
+        {% for message in messages %}
+        <article>
+          <header><kbd>{{ message.get_sender_display }}</kbd></header>
+          <p>{{ message.content|safe }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <form id="chat-form">
+        {% csrf_token %}
+        <fieldset role="group">
+          <input id="chat-input" name="text" type="text" placeholder="Type to start chatting..."  />
+          <input type="submit" value="Send" />
+        </fieldset>
+      </form>
+    </section>
+    <section>
+      <h3>Testimonials</h3>
+      <blockquote>
+        “Windy's support team helped me realize that I didn't actually need a Windows machine!”
+        <footer>
+          <cite>— Steve Jobs</cite>
+        </footer>
+      </blockquote>
+      <blockquote>
+        “Thanks to Windy's support team, I can finally facetime my grandkids!”
+        <footer>
+          <cite>— Cat Lady</cite>
+        </footer>
+      </blockquote>
+    </section>
+  </main>
+</body>
+</html>
